@@ -9,40 +9,36 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  Alert,
+  TextInput,
+  TouchableHighlight
 } from 'react-native';
 
 // props是一个组件的参数，在父控件中设置，不可改变
 // state是一个组件mounts时设置的属性，子空间自身可以管理自己的state
-class Timber extends Component {
-  constructor(props){
-    super(props)
-    this.state = {count:0};
+class Touch extends Component {
+  handlePress(){
+    Alert.alert("press")
   }
-  componentDidMount(){
-    let that = this;
-    setInterval(function () {
-      that.increase()
-    },1000)
-  }
-
-  increase(){
-    this.setState({count:this.state.count + 1})
+  handleLongPress(){
+    Alert.alert('longPress')
   }
 
   render(){
     return (
-      <View>
+      <TouchableHighlight
+        onPress={this.handlePress}
+        onLongPress={this.handleLongPress}>
         <Text>
-          count:{this.state.count}
+          Press me!
         </Text>
-      </View>
+      </TouchableHighlight>
     )
   }
 
 }
 
-var user = {name:"foo",age:20}
 export default class App extends Component {
   getDefaultProps(){
     //
@@ -62,7 +58,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Timber/>
+        <Touch/>
       </View>
     );
   }
