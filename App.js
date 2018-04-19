@@ -12,22 +12,35 @@ import {
   View
 } from 'react-native';
 
-class User extends Component {
+// props是一个组件的参数，在父控件中设置，不可改变
+// state是一个组件mounts时设置的属性，子空间自身可以管理自己的state
+class Timber extends Component {
+  constructor(props){
+    super(props)
+    this.state = {count:0};
+  }
+  componentDidMount(){
+    let that = this;
+    setInterval(function () {
+      that.increase()
+    },1000)
+  }
+
+  increase(){
+    this.setState({count:this.state.count + 1})
+  }
+
   render(){
-    const user = this.props.data;
-    this.props.onReady("I am ready!")
     return (
       <View>
         <Text>
-          Name:{user.name}
-          Age:{user.age}
+          count:{this.state.count}
         </Text>
       </View>
     )
   }
 
 }
-User.defaultProps = {age:0}
 
 var user = {name:"foo",age:20}
 export default class App extends Component {
@@ -49,7 +62,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <User data={user} onReady={this.handlerReady}/>
+        <Timber/>
       </View>
     );
   }
